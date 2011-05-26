@@ -20,7 +20,7 @@
     <setting id="TRANSMISSION_PWD" value="openelec" />
     <setting id="TRANSMISSION_START" value="false" />
     <setting id="TRANSMISSION_USER" value="openelec" />
-    <setting id="TVHEADEND_START" value="false" />
+    <setting id="TVHEADEND_START" value="DVB" />
     <setting id="UPDATE_AUTO" value="manual" />
     <setting id="WAKEUP_MUSICDBUPDATE" value="false" />
     <setting id="WAKEUP_VIDEODBUPDATE" value="false" />

@@ -36,7 +36,7 @@
 	<!-- TV_SERVER -->
 	<string id="4100">TV/PVR</string>
 	<string id="4110">Boot</string>
-	<string id="4111">Start TV Server at boot</string>
+	<string id="4111">Tvheadend usage</string>
 
 	<!-- SAMBA -->
 	<string id="5000">Samba</string>
