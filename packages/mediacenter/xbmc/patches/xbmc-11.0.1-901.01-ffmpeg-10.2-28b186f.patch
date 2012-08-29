@@ -2325,7 +2325,7 @@ diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.
    }
  }
  
-@@ -809,20 +768,9 @@
+@@ -809,24 +768,9 @@
  {
    int result, frames;
  
@@ -2333,6 +2333,9 @@ diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.
 -
    if (frame)
    {
+-#if (defined USE_OLD_AV_VSRC_BUFFER_ADD_FRAME)
+-    result = m_dllAvFilter.av_vsrc_buffer_add_frame(m_pFilterIn, frame, frame->pts, m_pCodecContext->sample_aspect_ratio);
+-#else
 -#if LIBAVFILTER_VERSION_INT >= AV_VERSION_INT(2,13,0)
      result = m_dllAvFilter.av_vsrc_buffer_add_frame(m_pFilterIn, frame, 0);
 -#elif LIBAVFILTER_VERSION_INT >= AV_VERSION_INT(2,7,0)
@@ -2342,11 +2345,12 @@ diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.
 -#else
 -    result = m_dllAvFilter.av_vsrc_buffer_add_frame(m_pFilterIn, frame, frame->pts, m_pCodecContext->sample_aspect_ratio);
 -#endif
+-#endif
 -
      if (result < 0)
      {
        CLog::Log(LOGERROR, "CDVDVideoCodecFFmpeg::FilterProcess - av_vsrc_buffer_add_frame");
-@@ -830,7 +778,13 @@
+@@ -834,7 +778,13 @@
      }
    }
  
@@ -2361,7 +2365,7 @@ diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.
    {
      CLog::Log(LOGERROR, "CDVDVideoCodecFFmpeg::FilterProcess - avfilter_poll_frame");
      return VC_ERROR;
-@@ -838,19 +792,9 @@
+@@ -842,19 +792,9 @@
  
    if (frames > 0)
    {
@@ -2383,7 +2387,7 @@ diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.
      {
        CLog::Log(LOGERROR, "CDVDVideoCodecFFmpeg::FilterProcess - cur_buf");
        return VC_ERROR;
-@@ -861,11 +805,11 @@
+@@ -865,11 +805,11 @@
      else
        m_pFrame->repeat_pict      = -(frames - 1);
  
@@ -2399,6 +2403,7 @@ diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.
  
      if(frames > 1)
        return VC_PICTURE;
+
 diff -Naur xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h xbmc-11.0.1.patch/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
 --- xbmc-11.0.1/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h	2012-03-21 23:57:34.000000000 +0100
 +++ xbmc-11.0.1.patch/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h	2012-06-05 15:19:23.946496292 +0200
